@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDHttp", "GDHttp\GDHttp.csproj", "{B197BFEB-1315-47B2-B0DD-6AF7F1D48785}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{0E4BB5AE-B7F2-4677-8ED3-044380C1219B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B197BFEB-1315-47B2-B0DD-6AF7F1D48785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B197BFEB-1315-47B2-B0DD-6AF7F1D48785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B197BFEB-1315-47B2-B0DD-6AF7F1D48785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B197BFEB-1315-47B2-B0DD-6AF7F1D48785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4BB5AE-B7F2-4677-8ED3-044380C1219B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4BB5AE-B7F2-4677-8ED3-044380C1219B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4BB5AE-B7F2-4677-8ED3-044380C1219B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4BB5AE-B7F2-4677-8ED3-044380C1219B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
