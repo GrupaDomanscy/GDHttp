@@ -1,5 +1,6 @@
 using System.Collections.Specialized;
 using System.Net;
+using System.Reflection;
 using System.Web;
 
 namespace GDHttp;
@@ -25,6 +26,57 @@ public class HttpRequest
         this.Headers = headers;
         this.QueryParams = queryParams;
         this.Body = body;
+    }
+
+    public T ParseQueryParamsToClass<T>()
+    {
+        Type type = typeof(T);
+
+        T instance = (T)Activator.CreateInstance(type)!;
+
+        for (var i = 0; i < type.GetProperties().Length; i++)
+        {
+            PropertyInfo propertyInfo = type.GetProperties()[i];
+
+            String propertyName = propertyInfo.Name;
+            Type propertyType = propertyInfo.PropertyType;
+
+            if (!QueryParams.ContainsKey(propertyName)) continue;
+            if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                propertyType = Nullable.GetUnderlyingType(propertyInfo.PropertyType)!;
+            }
+
+            if (propertyType == typeof(string))
+            {
+                propertyInfo.SetValue(instance, QueryParams[propertyName]);
+            }
+            else
+            {
+                try
+                {
+                    propertyInfo.SetValue(instance, Convert.ChangeType(QueryParams[propertyName], propertyType));
+                }
+                catch (InvalidCastException)
+                {
+                    // This error is thrown when trying to convert string to other incompatible type.
+                    // It happens when client provided impossible to convert (wrong) data.
+                }
+                catch (FormatException)
+                {
+                    // This error is thrown when trying to convert string to other compatible type, but wrong format.
+                    // It happens when client provided impossible to convert (wrong) data.
+                }
+                catch (OverflowException)
+                {
+                    // This error is thrown when trying to convert string to other compatible type, but final type is
+                    // too small for the provided input. (for ex. int32 can't be bigger than 2,147,483,647)
+                    // It happens when client provided impossible to convert (wrong) data.
+                }
+            }
+        }
+
+        return instance;
     }
 
     public static HttpRequest FromHttpListenerRequest(HttpListenerRequest source)
