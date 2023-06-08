@@ -7,18 +7,18 @@ namespace GDHttp;
 public class HttpResponse
 {
     /* SOURCE: https://referencesource.microsoft.com/#System.Web/WorkerRequest.cs,afb948c97b3d42e4, */
-    private static readonly String[][] _HTTPStatusDescriptions =
+    private static readonly string[][] HttpStatusDescriptions =
     {
-        null,
+        new string[] {},
 
-        new String[]
+        new []
         {
             /* 100 */"Continue",
             /* 101 */ "Switching Protocols",
             /* 102 */ "Processing"
         },
 
-        new String[]
+        new []
         {
             /* 200 */"OK",
             /* 201 */ "Created",
@@ -30,7 +30,7 @@ public class HttpResponse
             /* 207 */ "Multi-Status"
         },
 
-        new String[]
+        new []
         {
             /* 300 */"Multiple Choices",
             /* 301 */ "Moved Permanently",
@@ -42,7 +42,7 @@ public class HttpResponse
             /* 307 */ "Temporary Redirect"
         },
 
-        new String[]
+        new []
         {
             /* 400 */"Bad Request",
             /* 401 */ "Unauthorized",
@@ -70,7 +70,8 @@ public class HttpResponse
             /* 423 */ "Locked",
             /* 424 */ "Failed Dependency"
         },
-        new String[]
+        
+        new []
         {
             /* 500 */"Internal Server Error",
             /* 501 */ "Not Implemented",
@@ -91,11 +92,11 @@ public class HttpResponse
             int i = code / 100;
             int j = code % 100;
 
-            if (j < _HTTPStatusDescriptions[i].Length)
-                return _HTTPStatusDescriptions[i][j];
+            if (j < HttpStatusDescriptions[i].Length)
+                return HttpStatusDescriptions[i][j];
         }
 
-        return String.Empty;
+        return string.Empty;
     }
 
     public HttpStatusCode StatusCode { get; set; }
