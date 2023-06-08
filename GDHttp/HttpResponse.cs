@@ -103,6 +103,7 @@ public class HttpResponse
 
     public HttpResponse()
     {
+        this.Body = "";
         this.Headers = new Dictionary<string, string>();
     }
     
