@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using GDHttp.Builders;
 
 namespace GDHttp;
 
@@ -105,6 +106,14 @@ public class HttpResponse
     {
         this.Body = "";
         this.Headers = new Dictionary<string, string>();
+    }
+
+    public static HttpResponse EmptyNotFound()
+    {
+        return new HttpResponseBuilder()
+            .SetStatusCode(HttpStatusCode.NotFound)
+            .SetPlainTextBody("")
+            .Build();
     }
     
     public void AssignToHttpListenerResponse(HttpListenerResponse response)
