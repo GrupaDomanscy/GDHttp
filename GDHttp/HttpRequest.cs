@@ -29,7 +29,7 @@ public class HttpRequest
 
     public static HttpRequest FromHttpListenerRequest(HttpListenerRequest source)
     {
-        String path = source.Url!.AbsolutePath;
+        string path = source.Url!.AbsolutePath;
 
         string[] headerKeys = source.Headers.AllKeys!;
 
