@@ -18,16 +18,38 @@ public class HttpListener
         }
     }
 
-    public void Start(ProcessRequestCallback callback)
+    public event EventHandler ServerClosed;
+    public event EventHandler ServerStarted;
+
+    protected void OnServerClosed(EventArgs e)
     {
+        ServerClosed.Invoke(this, e);
+    }
+
+    protected void OnServerStarted(EventArgs e)
+    {
+        ServerStarted.Invoke(this, e);
+    }
+
+    public void Start(ProcessRequestCallback callback, CancellationToken cancellationToken)
+    {
+        OnServerStarted(EventArgs.Empty);
+        
         _httpListener.Start();
         
-        while (true)
+        while (! cancellationToken.IsCancellationRequested)
         {
-            HttpListenerContext ctx = _httpListener.GetContext();
+            var ctx = _httpListener.GetContextAsync();
 
-            Task.Run(() => ProcessRequest(ctx, callback));
+            if (! ctx.Wait(TimeSpan.FromSeconds(1)))
+            {
+                continue;
+            }
+
+            Task.Run(() => ProcessRequest(ctx.Result, callback));
         }
+        
+        OnServerClosed(EventArgs.Empty);
     }
 
     private void ProcessRequest(HttpListenerContext ctx, ProcessRequestCallback callback)
