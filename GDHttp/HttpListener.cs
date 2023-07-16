@@ -16,19 +16,22 @@ public class HttpListener
         {
             this._httpListener.Prefixes.Add(domain);
         }
+
+        ServerClosed = null;
+        ServerStarted = null;
     }
 
-    public event EventHandler ServerClosed;
-    public event EventHandler ServerStarted;
+    public event EventHandler? ServerClosed;
+    public event EventHandler? ServerStarted;
 
     protected void OnServerClosed(EventArgs e)
     {
-        ServerClosed.Invoke(this, e);
+        ServerClosed?.Invoke(this, e);
     }
 
     protected void OnServerStarted(EventArgs e)
     {
-        ServerStarted.Invoke(this, e);
+        ServerStarted?.Invoke(this, e);
     }
 
     public void Start(ProcessRequestCallback callback, CancellationToken cancellationToken)
